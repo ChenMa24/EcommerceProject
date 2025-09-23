@@ -8,13 +8,19 @@ export function HomePage({ cartItems }) {
     const [products, setProducts] = useState([]);
 
     useEffect(() => {
-        axios.get('/api/products')
-            .then((response) => {
-                setProducts(response.data)
-            })
-            .catch((error) => {
-                console.error('Error fetching products:', error);
-            });
+        // axios.get('/api/products')
+        //     .then((response) => {
+        //         setProducts(response.data)
+        //     })
+        //     .catch((error) => {
+        //         console.error('Error fetching products:', error);
+        //     });
+
+        const getHomeData = async () => {
+            const products = await axios.get('/api/products');
+            setProducts(products.data);
+        }
+        getHomeData();
     }, []) // empty dependency array means this will only run once when the component mounts
 
 

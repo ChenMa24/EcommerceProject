@@ -11,13 +11,12 @@ function App() {
   const [cartItems, setCartItems] = useState([]);
 
   useEffect(() => {
-    axios.get('/api/cart-items')
-      .then((response) => {
-        setCartItems(response.data)
-      })
-      .catch((error) => {
-        console.error('Error fetching cart items:', error);
-      })
+
+    const fetchAppData = async () => {
+      const cartItems = await axios.get('/api/cart-items?expand=product');
+      setCartItems(cartItems.data);
+    }
+    fetchAppData();
   }, []) // empty dependency array means this will only run once when the component mounts
 
   return (
