@@ -3,10 +3,9 @@ import { useEffect, useState } from 'react';
 import { Header } from '../components/Header';
 import './HomePage.css';
 
-export function HomePage() {
+export function HomePage({ cartItems }) {
 
     const [products, setProducts] = useState([]);
-    const [cartItems, setCartItems] = useState([]);
 
     useEffect(() => {
         axios.get('/api/products')
@@ -16,14 +15,6 @@ export function HomePage() {
             .catch((error) => {
                 console.error('Error fetching products:', error);
             });
-
-        axios.get('/api/cart-items')
-            .then((response) => {
-                setCartItems(response.data)
-            })
-            .catch((error) => {
-                console.error('Error fetching cart items:', error);
-            })
     }, []) // empty dependency array means this will only run once when the component mounts
 
 
