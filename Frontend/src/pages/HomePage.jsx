@@ -1,15 +1,22 @@
+import axios from 'axios';
+import { useEffect, useState } from 'react';
 import { Header } from '../components/Header';
-import { products } from '../../starting-code/data/products';
 import './HomePage.css';
 
 export function HomePage() {
-    fetch('http://localhost:3000/products')
-        .then((response) => {
-            return response.json()
-        })
-        .then((data) => {
-            console.log(data)
-        })
+
+    const [products, setProducts] = useState([]);
+
+    useEffect(() => {
+        axios.get('http://localhost:3000/api/products')
+            .then((response) => {
+                setProducts(response.data)
+            })
+            .catch((error) => {
+                console.error('Error fetching products:', error);
+            });
+    }, []) // empty dependency array means this will only run once when the component mounts
+
 
     return (
         <>
