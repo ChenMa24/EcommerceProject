@@ -6,6 +6,7 @@ import './HomePage.css';
 export function HomePage() {
 
     const [products, setProducts] = useState([]);
+    const [cartItems, setCartItems] = useState([]);
 
     useEffect(() => {
         axios.get('http://localhost:3000/api/products')
@@ -15,6 +16,14 @@ export function HomePage() {
             .catch((error) => {
                 console.error('Error fetching products:', error);
             });
+
+        axios.get('http://localhost:3000/api/cart-items')
+            .then((response) => {
+                setCartItems(response.data)
+            })
+            .catch((error) => {
+                console.error('Error fetching cart items:', error);
+            })
     }, []) // empty dependency array means this will only run once when the component mounts
 
 
@@ -22,7 +31,7 @@ export function HomePage() {
         <>
             <title>Ecommerce Project</title>
 
-            <Header />
+            <Header cartItems={cartItems} />
 
             <div className="home-page">
                 <div className="products-grid">
